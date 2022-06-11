@@ -14,7 +14,6 @@ const NewsCard = (props : any) => {
                 <div className={css.card}>
                     <img src = {item.thumbnail} />
                     <h5>{item.title}</h5>
-                    <span>3 days ago</span>
                 </div>
                 </>
                )
