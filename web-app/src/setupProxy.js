@@ -1,14 +1,11 @@
-const proxy = require('http-proxy-middleware');
-const env = process.env;
-function proxyConfig(app) {
-    app.use(
-      proxy(env.REACT_APP_NEWS_API_URL_PATH, {
-        target: env.REACT_APP_BASE_NEWS_URL,
-        changeOrigin: true,
-        secure: false
-        // enable websocket proxying
-      })
-    );
-  }
-  module.exports = proxyConfig;
-  
+const { createProxyMiddleware } = require('http-proxy-middleware');
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+module.exports = function (app) {
+  app.use(
+    [process.env.REACT_APP_NEWS_API_URL_PATH],
+    createProxyMiddleware({
+      target: process.env.REACT_APP_BASE_NEWS_URL,
+      changeOrigin: true
+    })
+  );
+};
